@@ -1,0 +1,39 @@
+#spring:
+#  jpa:
+#    properties:
+#      hibernate:
+#        show-sql=true
+#  security:
+#    user:
+#      name: name2022
+#      password: name2022
+#  application:
+#    name: SPENDING_MANAGEMENT_SERVICE
+#  profiles:
+#    active:
+#      - dev
+#      - dev-local
+#  liquibase:
+#    change-log: classpath:db/master.xml
+#server:
+#  port: 8081
+#logging:
+#  level:
+#    sql: debug
+spring:
+  application:
+    name: ${APPLICATION_NAME:SPENDING_MANAGEMENT_SERVICE}
+  profiles:
+    active:
+      - dev
+      - dev-local
+  liquibase:
+    change-log: classpath:db/master.xml
+application:
+  token:
+    key: shopsport@2023
+    expire-time-access-token: 86400000
+    expire-time-refresh-token: 86400000
+    logging:
+      level:
+        root: DEBUG

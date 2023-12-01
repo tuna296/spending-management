@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="account.xml" author="nguyenanhtu002">
+        <createTable tableName="accounts">
+            <column name="id" type="VARCHAR(255)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_account_id"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="VARCHAR(255)">
+                <constraints foreignKeyName="fk_account_role"
+                             referencedTableName="role"
+                             referencedColumnNames="id"
+                />
+            </column>
+            <column name="is_activated" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="is_deleted" type="BOOLEAN" defaultValueBoolean="false"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
