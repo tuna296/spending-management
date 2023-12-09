@@ -4,6 +4,7 @@ import com.learn.SpendingManagement.dto.base.PageResponse;
 import com.learn.SpendingManagement.dto.request.user.UserRequest;
 import com.learn.SpendingManagement.dto.response.User.UserResponse;
 import com.learn.SpendingManagement.entity.user.User;
+import com.learn.SpendingManagement.exception.user.AccountAlreadyExistsException;
 import com.learn.SpendingManagement.exception.user.EmailAlreadyExistException;
 import com.learn.SpendingManagement.exception.user.PhoneAlreadyExistException;
 import com.learn.SpendingManagement.exception.user.UserNotFoundException;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
     log.info("(request) create");
     this.checkPhoneExist(request.getPhone());
     this.checkPhoneExist(request.getEmail());
+    this.checkAccountExist(request.getAccountId());
     User user = new User(
           request.getAddressId(),
           request.getAccountId(),
@@ -78,8 +80,16 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserResponse detail(String id) {
     log.info("(detail) request: {}", id);
-     this.find(id);
-     return repository.detail(id);
+    this.find(id);
+    return repository.detail(id);
+  }
+
+  private void checkAccountExist(String id) {
+    log.debug("(checkAccountExist): {}", id);
+    if (repository.checkAccountExist(id)) {
+      log.error("Account Already Exist ");
+      throw new AccountAlreadyExistsException();
+    }
   }
 
   private void checkEmailExist(String mail) {

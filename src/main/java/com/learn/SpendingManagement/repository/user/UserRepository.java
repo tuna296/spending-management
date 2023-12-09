@@ -79,5 +79,12 @@ public interface UserRepository extends BaseRepository<User> {
         ORDER BY u.fullName
         """)
   Page<UserResponse> findAllUsers(Pageable pageable);
+
+  @Query("""
+         SELECT CASE WHEN COUNT(u) > 0
+         THEN true ELSE false END FROM User u
+         WHERE u.accountId = :id
+        """)
+  boolean checkAccountExist(String id);
 }
 
